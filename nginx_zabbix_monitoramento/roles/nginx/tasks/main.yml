@@ -3,6 +3,12 @@
     name: nginx
     state: present
 
+- name: Criando diretório de sites 
+  file:
+    path: /etc/nginx/sites-available
+    state: directory
+    mode: 0755
+
 - name: Copiando configuração _default do nginx
   template:
     src: ../templates/_default.conf.j2
