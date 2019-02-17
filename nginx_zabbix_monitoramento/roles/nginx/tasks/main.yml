@@ -1,39 +1,39 @@
 ---
 tasks:
-- name: Garantindo que o nginx esteja instalado
-  yum:
-    name: nginx
-    state: present
+  - name: Garantindo que o nginx esteja instalado
+    yum:
+      name: nginx
+      state: present
 
-- name: Copiando configuração _default do nginx
-  template:
-    src: ../templates/_default.conf.j2
-    dest: /etc/nginx/sites-available/_default.conf
-  notify:
-    - reiniciar nginx
+  - name: Copiando configuração _default do nginx
+    template:
+      src: ../templates/_default.conf.j2
+      dest: /etc/nginx/sites-available/_default.conf
+    notify:
+      - reiniciar nginx
 
-- name: garantir que nginx esteja rodando
-  service:
-    name: nginx
-    state: started
+  - name: garantir que nginx esteja rodando
+    service:
+      name: nginx
+      state: started
 
 
-- name: Criando diretório de scripts 
-  file:
-    path: /etc/zabbix/scripts
-    state: directory
-    mode: 0755
+  - name: Criando diretório de scripts 
+    file:
+      path: /etc/zabbix/scripts
+      state: directory
+      mode: 0755
 
-- name: Copiando script de acesso ao status do nginx
-  template:
-    src: ../templates/nginx.sh.j2
-    dest: /etc/zabbix/scripts/nginx.sh
+  - name: Copiando script de acesso ao status do nginx
+    template:
+      src: ../templates/nginx.sh.j2
+      dest: /etc/zabbix/scripts/nginx.sh
 
-- name: Copiando userparameters do zabbix
-  template:
-    src: ../templates/userparameter_nginx.conf.j2
-    dest: /etc/zabbix/zabbix_agentd.d/userparameter_nginx.conf
-    mode: "+x"
+  - name: Copiando userparameters do zabbix
+    template:
+      src: ../templates/userparameter_nginx.conf.j2
+      dest: /etc/zabbix/zabbix_agentd.d/userparameter_nginx.conf
+      mode: "+x"
 
 handlers:
   - name: reiniciar nginx
