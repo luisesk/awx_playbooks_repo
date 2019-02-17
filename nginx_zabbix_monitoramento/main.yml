@@ -1,0 +1,7 @@
+---
+- name: Install nginx monitoring
+  hosts: all
+  become: true
+
+  roles:
+     - nginx
